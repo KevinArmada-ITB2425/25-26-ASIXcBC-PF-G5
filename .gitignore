@@ -1,0 +1,38 @@
+# === CREDENCIALS I CLAUS — MAI PUJAR ===
+*.key
+*.pem
+*.p12
+*.pfx
+wireguard-private.key
+*_private_key
+secrets.txt
+credentials.txt
+.env
+wazuh-agent-key.txt
+
+# === CONFIGURACIONS AMB DADES SENSIBLES ===
+config-*.xml.bak
+*.backup
+ossec.conf.bak
+
+# === CAPTURES DE XARXA (pesades) ===
+*.pcap
+*.pcapng
+*.cap
+
+# === DISCOS DE MÀQUINES VIRTUALS ===
+*.vmdk
+*.vdi
+*.qcow2
+*.ova
+*.ovf
+
+# === SISTEMA ===
+.DS_Store
+Thumbs.db
+*.tmp
+*~
+
+# === LOGS CRUS ===
+tests/evidencies/**/*.pcap
+tests/evidencies/**/*.pcapng
