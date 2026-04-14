@@ -9,7 +9,6 @@
                              │ WAN
                     ┌────────┴────────┐
                     │ pfSense /       │
-                    │ OPNsense        │
                     │ + Suricata IDS  │
                     │ + WireGuard VPN │
                     └────────┬────────┘
