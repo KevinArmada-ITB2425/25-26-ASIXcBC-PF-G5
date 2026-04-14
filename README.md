@@ -110,27 +110,6 @@ Este proyecto integra conocimientos de múltiples módulos del grado:
 - **Servicios en Red** — DHCP, DNS con DNSSEC y filtrado
 - **Gestión de Incidentes** — Detección, análisis y respuesta mediante Wazuh + MITRE ATT&CK
 
----
-
-## 📁 Estructura del Repositorio
-red-corporativa-asix/
-├── docs/ # Documentación técnica completa
-│ ├── plan-proyecto.md # Sprints, hitos y cronograma
-│ ├── diseno-red.md # Topología y direccionamiento
-│ ├── hardening.md # Checklists de securización
-│ ├── pruebas.md # Plan de pruebas T01–T26
-│ └── justificacion-tecnica.md # Competencias ASIX cubiertas
-├── configs/ # Configuraciones exportadas (sanitizadas)
-│ ├── pfsense/
-│ ├── wireguard/
-│ ├── vlans/
-│ └── wazuh/
-├── scripts/ # Scripts de hardening y automatización
-├── tests/evidencias/ # Capturas por prueba (T01/, T02/...)
-├── diagrams/ # Diagramas de topología
-├── weekly-logs/ # Registro semanal de progreso
-├── CONTRIBUTING.md # Convención de commits y ramas
-└── .gitignore
 
 ---
 
