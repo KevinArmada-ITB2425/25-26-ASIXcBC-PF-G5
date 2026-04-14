@@ -120,4 +120,5 @@ Gestión de tareas: **ProofHub** | Control de versiones: **este repositorio**
 | Nom | GitHub |
 |---|---|
 | kevin [itb] armada carrillo | [@KevinArmada-ITB2425](https://github.com/KevinArmada-ITB2425) |
-| *(resta de membres del grup)* | |
+| jan [itb] martinez salas | [@JanMartinez-ITB2425](https://github.com/JanMartinez-ITB2425) |
+| ernesto [itb] martinez argueta | [@ErnestoMartinez-ITB2425](https://github.com/ErnestoMartinez-ITB2425) |
