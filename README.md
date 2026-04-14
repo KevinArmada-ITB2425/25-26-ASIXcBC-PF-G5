@@ -115,4 +115,4 @@ Este proyecto integra conocimientos de múltiples módulos del grado:
 
 ## 👤 Autores
 
-**kevin, ernesto y jan** — Grado Superior ASIX
+**Kevin, Ernesto y Jan** — Grado Superior ASIX
