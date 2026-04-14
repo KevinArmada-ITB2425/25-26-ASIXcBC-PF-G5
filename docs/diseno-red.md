@@ -4,14 +4,14 @@
 
 ```
                     ┌─────────────────┐
-                    │    INTERNET      │
+                    │    INTERNET     │
                     └────────┬────────┘
                              │ WAN
                     ┌────────┴────────┐
-                    │  pfSense /       │
-                    │  OPNsense        │
-                    │  + Suricata IDS  │
-                    │  + WireGuard VPN │
+                    │ pfSense /       │
+                    │ OPNsense        │
+                    │ + Suricata IDS  │
+                    │ + WireGuard VPN │
                     └────────┬────────┘
            ┌─────────────────┼─────────────────┐
            │                 │                 │
@@ -23,7 +23,7 @@
            │                 │                 │
     [wazuh-server]    [Wazuh Agent]      [Wazuh Agent]
     [admin-server]    [client-user]      [dmz-host]
-           ▲
+           │
     ┌──────┴──────┐
     │ WireGuard   │
     │ 10.0.0.0/24 │
