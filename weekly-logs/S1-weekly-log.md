@@ -33,9 +33,9 @@
 
 ### ✅ Completat
 -
+- Instal·lació del hipervisor (VirtualBox / IsardVDI)
 
 ### 🔄 En progrés
-- Instal·lació del hipervisor (VirtualBox / IsardVDI)
 - Creació VM `pfsense-fw` (2 vCPUs / 1 GB RAM)
 - Creació VM `wazuh-server` (2 vCPUs / 4 GB RAM)
 - Creació VMs `admin-server`, `client-user`, `dmz-host`
