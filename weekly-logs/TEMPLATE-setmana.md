@@ -17,7 +17,7 @@
 ## 🔄 En progrés
 - Creació i arrencada de la VM `pfsense-fw` (2 vCPUs / 1 GB RAM)
 - Creació i arrencada de la VM `wazuh-server` (2vCPUs / 4 GB RAM)
-- Creació i arrencada de la VM `admin-server, client-user y dmz-host`
+- Creació i arrencada de la VM `admin-server, client-user y dmz-host` (2vCPUs / 1 GB RAM Cada Maquina)
 - Instalar VirtualBox o IsardVDI en la máquina física, verificar que la virtualización hardware (VT-x/AMD-V) está habilitada en la BIOS
 
 ## ❌ Blocants
@@ -36,8 +36,8 @@
 
 | Dia | Hores | Activitat |
 |---|---|---|
-| Dilluns 13/04 | 2h | Configuració repositori GitHub, estructura de carpetes, CONTRIBUTING.md, resolució errors git (PAT, merge conflicts) |
-| Dimarts 14/04 | 3h | README.md, docs/diseno-red.md, matriu inter-VLAN, diagrama topologia draw.io, push branques main/develop |
+| Dilluns 13/04 - 20/04 | 6h | Configuració repositori GitHub, estructura de carpetes, CONTRIBUTING.md, resolució errors git (PAT, merge conflicts) |
+| Dimarts 14/04 - 21/04 | 2h | README.md, docs/diseno-red.md, matriu inter-VLAN, diagrama topologia draw.io, push branques main/develop |
 | Dimecres | — | — |
 | Dijous | — | — |
 | Divendres | — | — |
