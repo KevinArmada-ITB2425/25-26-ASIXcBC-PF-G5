@@ -60,6 +60,6 @@
 ## 📊 Resum Sprint 1
 | | Valor |
 |---|---|
-| Tasques completades | 3 / 10 |
+| Tasques completades | 4 / 10 |
 | Hores totals | 6h + (pendent) |
 | Blocants resolts ||
