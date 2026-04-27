@@ -48,12 +48,9 @@
 ### ⏱️ Hores
 | Dia | Hores | Activitat |
 |---|---|---|
-| Dilluns 20/04 | | |
-| Dimarts 21/04 | | |
-| Dimecres 22/04 | | |
-| Dijous 23/04 | | |
-| Divendres 24/04 | | |
-| **Total S2** | | |
+| Dilluns 20/04 | 3h | |
+| Dimarts 21/04 | 2h | |
+| **Total S2** | 5h | |
 
 ---
 
