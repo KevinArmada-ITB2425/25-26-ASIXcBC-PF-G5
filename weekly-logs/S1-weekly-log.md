@@ -33,6 +33,7 @@
 
 ### ✅ Completat
 -
+- Crear y arrancar pfsense asignar las interfaces WAN y LAN trunk
 - Instal·lació del hipervisor (VirtualBox / IsardVDI)
 
 ### 🔄 En progrés
@@ -57,6 +58,6 @@
 ## 📊 Resum Sprint 1
 | | Valor |
 |---|---|
-| Tasques completades | 4 / 10 |
+| Tasques completades | 5 / 10 |
 | Hores totals | 6h + (pendent) |
 | Blocants resolts ||
