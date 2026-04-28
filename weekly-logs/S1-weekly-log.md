@@ -3,7 +3,7 @@
 
 ---
 
-## Setmana 1 · 13/04 – 17/04
+## Setmana 1 · 13/04 – 20/04
 
 ### ✅ Completat
 - Creació de l'estructura de carpetes i markdown en VSCode · *#43922*
@@ -28,7 +28,7 @@
 
 ---
 
-## Setmana 2 · 20/04 – 24/04
+## Setmana 2 · 21/04 – 28/04
 
 ### ✅ Completat
 - Instal·lació del hipervisor (VirtualBox) i verificació VT-x/AMD-V a la BIOS · 
@@ -37,6 +37,8 @@
 - Creació i arrencada de la VM `wazuh-server` (2 vCPUs / 4 GB RAM, Ubuntu 22.04 LTS) · 
   - Configuració IP fixa `192.168.10.10/24` via netplan
 - Documentació de l'entorn definitiu a `docs/diseno-red.md` · 
+- Crear els switches virtuals per VLAN al hipervisor · 
+  - Configurats adaptadors de xarxa interns (un per VLAN: gestió, usuaris, DMZ)
 
 ### 🔄 En progrés
 - Creació VMs `admin-server`, `client-user1`, `client-user2`, `dmz-host1`, `dmz-host2` (Debian 12)
