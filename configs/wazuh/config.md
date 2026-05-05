@@ -117,6 +117,15 @@ curl -k https://192.168.10.10
 
 ## Desplegament d'Agents
 
+![Verificació Wazuh](wazuh-server_agentes-clientes.png)
+
+
+![Ejemplo creacion Agentes](wazuh-agent_creacion-ejemplo1.png)
+
+
+![Ejemplo creacion Agentes2](wazuh-agent_creacion-ejemplo2.png)
+
+
 ### Informació de l'agent
 
 | Camp | Detall |
@@ -167,6 +176,8 @@ Un cop l'agent està actiu, es pot verificar al dashboard:
 - **Ruta:** `https://192.168.10.10` → Endpoints → Agents
 - L'agent `client-user1` apareix amb estat **active** (verd)
 - Node del clúster: `node01`
+
+![Ejemplo funcionamiento logs](dashboard-client-user1.png)
 
 ### Mètriques inicials recollides
 
