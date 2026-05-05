@@ -8,7 +8,7 @@
 | **SO** | Ubuntu Server 22.04 LTS |
 | **RAM** | 4 GB |
 | **vCPUs** | 2 |
-| **Rol** | Router + Firewall (nftables) + DHCP/DNS + Suricata |
+| **Rol** | Router + Firewall (nftables) + DHCP + DNS (Technitium) + Suricata |
 
 ---
 
@@ -69,6 +69,88 @@ sudo sysctl -p
 
 ---
 
+## DHCP — isc-dhcp-server
+
+### Instal·lació
+
+```bash
+sudo apt update
+sudo apt install isc-dhcp-server -y
+```
+
+### Interfícies d'escolta — `/etc/default/isc-dhcp-server`
+
+```bash
+INTERFACESv4="enp2s0 enp3s0 enp4s0"
+```
+
+### Configuració — `/etc/dhcp/dhcpd.conf`
+
+```bash
+# Configuració global
+authoritative;
+default-lease-time 600;
+max-lease-time 7200;
+
+option domain-name "jankesto.local";
+option domain-search "jankesto.local";
+
+# Subxarxa Gestió
+subnet 192.168.10.0 netmask 255.255.255.0 {
+  option routers 192.168.10.1;
+  option domain-name-servers 192.168.10.1;
+
+  # Reserva wazuh-server
+  host servidor_wazuh {
+    hardware ethernet 52:54:00:01:56:1a;
+    fixed-address 192.168.10.10;
+  }
+}
+
+# Subxarxa Usuaris
+subnet 192.168.20.0 netmask 255.255.255.0 {
+  range 192.168.20.100 192.168.20.200;
+  option routers 192.168.20.1;
+  option domain-name-servers 192.168.20.1;
+}
+
+# Subxarxa DMZ
+subnet 192.168.30.0 netmask 255.255.255.0 {
+  option routers 192.168.30.1;
+  option domain-name-servers 192.168.30.1;
+
+  # Reserva dmz-host1
+  host servidor-web-dmz1 {
+    hardware ethernet 52:54:00:02:ee:b8;
+    fixed-address 192.168.30.10;
+  }
+
+  # Reserva dmz-host2
+  host servidor-web-dmz2 {
+    hardware ethernet 52:54:00:02:33:9e;
+    fixed-address 192.168.30.20;
+  }
+}
+```
+
+### Activar servei
+
+```bash
+sudo systemctl restart isc-dhcp-server
+sudo systemctl enable isc-dhcp-server
+sudo systemctl status isc-dhcp-server
+```
+
+### Reserves MAC
+
+| VM | MAC | IP reservada | Subxarxa |
+|---|---|---|---|
+| `wazuh-server` | `52:54:00:01:56:1a` | `192.168.10.10` | Gestió |
+| `dmz-host1` | `52:54:00:02:ee:b8` | `192.168.30.10` | DMZ |
+| `dmz-host2` | `52:54:00:02:33:9e` | `192.168.30.20` | DMZ |
+
+---
+
 ## Firewall i NAT amb nftables — `/etc/nftables.conf`
 
 ```bash
@@ -115,7 +197,46 @@ sudo systemctl start nftables
 
 ---
 
-## Verificació
+## DNS — Technitium DNS Server
+
+### Instal·lació
+
+```bash
+curl -sSL https://download.technitium.com/dns/install.sh | sudo bash
+```
+
+Accés al panell web: `http://192.168.10.1:5380`
+
+### Configuració de Forwarders
+
+| Forwarder | Descripció |
+|---|---|
+| `8.8.8.8` | Google DNS primari |
+| `1.1.1.1` | Cloudflare DNS secundari |
+
+### Zona local — `jankesto.local`
+
+| Nom | Tipus | IP |
+|---|---|---|
+| `wazuh` | A | `192.168.10.10` |
+| `DMZ` | A | `192.168.30.10` |
+
+> Zona interna per resoldre noms de les VMs sense dependre de DNS extern.
+
+### Verificació
+
+```bash
+ping wazuh.jankesto.local
+ping DMZ.jankesto.local
+```
+
+**Evidència de verificació:**
+
+![Verificació Technitium DNS] ???
+
+---
+
+## Verificació general
 
 ```bash
 # Comprovar interfícies i IPs
