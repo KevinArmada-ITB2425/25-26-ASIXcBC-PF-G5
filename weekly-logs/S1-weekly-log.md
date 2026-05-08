@@ -43,8 +43,6 @@
 - Crear les xarxes internes per subxarxa al hipervisor · *#43900*
   - Configurats adaptadors de xarxa interns (un per subxarxa: gestió, usuaris, DMZ)
 
-### 🔄 En progrés
-- Creació VMs `admin-server`, `client-user1`, `client-user2`, `dmz-host1`, `dmz-host2` (Debian 12)
 
 ### ❌ Blocants
 | Problema | Causa | Solució aplicada |
