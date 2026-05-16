@@ -1,7 +1,7 @@
-# 🔐 Arquitectura de Red Corporativa Segura amb SOC
-> **Projecte Final — Grau Superior ASIX | Curs 25-26 | Grup 5**
+# 🔐 Arquitectura de Red Corporativa Segura con SOC
+> **Proyecto Final — Grado Superior ASIX | Curso 25-26 | Grupo 5**
 
-[![Estat](https://img.shields.io/badge/Estat-En%20Desenvolupament-yellow)]()
+[![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow)]()
 [![Ubuntu](https://img.shields.io/badge/Router%2FFirewall-Ubuntu%20Server-orange)]()
 [![Wazuh](https://img.shields.io/badge/SOC-Wazuh%20SIEM%2FXDR-blue)]()
 [![WireGuard](https://img.shields.io/badge/VPN-WireGuard-green)]()
@@ -9,7 +9,7 @@
 
 ---
 
-## 📚 Índex
+## 📚 Índice
 
 - [¿De qué trata?](#-de-qué-trata-este-proyecto)
 - [¿Qué problema resuelve?](#-qué-problema-resuelve)
@@ -19,7 +19,7 @@
 - [Sprints y Weekly Logs](#-sprints--weekly-logs)
 - [Estructura del Repositorio](#-estructura-del-repositorio)
 - [Módulos ASIX cubiertos](#-módulos-asix-cubiertos)
-- [Autors](#-autors--grup-5)
+- [Autores](#-autores--grupo-5)
 
 ---
 
@@ -50,16 +50,16 @@ Este proyecto ataca los cuatro problemas con una arquitectura de defensa en tres
 Router/Firewall **Ubuntu Server** con **Suricata IDS/IPS** y `nftables`. Gestiona el enrutamiento entre subredes, aplica NAT hacia internet y bloquea tráfico no autorizado entre segmentos.
 
 ### Capa 2 — Segmentación Interna
-Tres subredes completamente aisladas con política **deny-all** por defecto gestionada via `iptables`:
-- **Subxarxa Gestió** `192.168.10.0/24` — servidors crítics, només accessible des de VPN
-- **Subxarxa Usuaris** `192.168.20.0/24` — llocs de treball, sense accés a Gestió
-- **Subxarxa DMZ/IoT** `192.168.30.0/24` — serveis exposats, aïllada de la resta
+Tres subredes completamente aisladas con política **deny-all** por defecto gestionada via `nftables`:
+- **Subred de Gestión** `192.168.10.0/24` — servidores críticos, solo accesible desde VPN
+- **Subred de Usuarios** `192.168.20.0/24` — puestos de trabajo, sin acceso a Gestión
+- **Subred DMZ/IoT** `192.168.30.0/24` — servicios expuestos, aislada del resto
 
 ### Capa 3 — SOC (Security Operations Center)
-Servidor **Wazuh** (SIEM + XDR) a la subxarxa Gestió. Agents en tots els endpoints detecten en temps real: brute-force, modificacions d'arxius crítics (FIM), vulnerabilitats CVE i escalades de privilegis. Esdeveniments mapejats a **MITRE ATT&CK**.
+Servidor **Wazuh** (SIEM + XDR) en la subred de Gestión. Agentes en todos los endpoints detectan en tiempo real: fuerza bruta, modificaciones de archivos críticos (FIM), vulnerabilidades CVE y escaladas de privilegios. Eventos mapeados a **MITRE ATT&CK**.
 
 ### Acceso Remoto
-**WireGuard VPN** amb xifrat Curve25519 + ChaCha20-Poly1305 instal·lat a l'`admin-server`. Clients per a Windows, Linux i Android. Tot l'accés auditat al SOC.
+**WireGuard VPN** con cifrado Curve25519 + ChaCha20-Poly1305 instalado en el `admin-server`. Clientes disponibles para Windows, Linux y Android. Todo el acceso auditado en el SOC.
 
 ---
 
@@ -68,26 +68,26 @@ Servidor **Wazuh** (SIEM + XDR) a la subxarxa Gestió. Agents en tots els endpoi
 | Componente | Tecnología | Por qué esta elección |
 |---|---|---|
 | Hipervisor | IsardVDI | Disponible en el entorno educativo ITB |
-| Router / Firewall | Ubuntu Server + nftables | Open source, configurable a mano, didáctico |
+| Router / Firewall | Ubuntu Server + nftables | Open source, configurable manualmente, didáctico |
 | IDS/IPS | Suricata | Multihilo, instalable en Ubuntu Server |
 | SOC (SIEM/XDR) | **Wazuh** | Open source, MITRE ATT&CK, sin límite de agentes |
 | VPN | **WireGuard** | Más rápido que OpenVPN, criptografía moderna |
 | DHCP | isc-dhcp-server | Estándar, configuración por subred |
-| DNS | Unbound | DNSSEC + filtrado de dominios maliciosos |
+| DNS | Technitium DNS | Interfaz web, zona local `jankesto.local` |
 
 ---
 
 ## 🖥️ Máquinas Virtuales
 
-| VM | SO | Xarxa | IP | RAM | Rol |
+| VM | SO | Red | IP | RAM | Rol |
 |---|---|---|---|---|---|
-| `ubuntu-router` | Ubuntu Server 22.04 | Totes | 192.168.X.1 | 2 GB | Router + Firewall (nftables) + Suricata + WireGuard |
-| `wazuh-server` | Ubuntu 22.04 LTS | Gestió | 192.168.10.10 | **4 GB** | SOC: Wazuh Manager + Indexer + Dashboard |
-| `admin-server` | Debian 12 | Gestió | 192.168.10.20 | 1 GB | DHCP + DNS + WireGuard server |
-| `client-user1` | Debian 12 | Usuaris | DHCP | 1 GB | Endpoint usuari + Wazuh Agent 1 |
-| `client-user2` | Debian 12 | Usuaris | DHCP | 1 GB | Endpoint usuari + Wazuh Agent 2 |
-| `dmz-host1` | Debian 12 | DMZ | 192.168.30.10 | 1 GB | Servei exposat + Wazuh Agent 3 |
-| `dmz-host2` | Debian 12 | DMZ | 192.168.30.20 | 1 GB | Servei exposat + Wazuh Agent 4 |
+| `ubuntu-router` | Ubuntu Server 22.04 | Todas | 192.168.X.1 | 2 GB | Router + Firewall (nftables) + Suricata + WireGuard |
+| `wazuh-server` | Ubuntu 22.04 LTS | Gestión | 192.168.10.10 | **4 GB** | SOC: Wazuh Manager + Indexer + Dashboard |
+| `admin-server` | Ubuntu 22.04 | Gestión | 192.168.10.20 | 1 GB | Administración + WireGuard server |
+| `client-user1` | Ubuntu 22.04 | Usuarios | 192.168.20.101 | 1 GB | Endpoint usuario + Wazuh Agent |
+| `client-user2` | Ubuntu 22.04 | Usuarios | 192.168.20.100 | 1 GB | Endpoint usuario + Wazuh Agent |
+| `dmz-host1` | Ubuntu Server 22.04 | DMZ | 192.168.30.10 | 1 GB | Servicio expuesto + Wazuh Agent |
+| `dmz-db-server` | Ubuntu Server 22.04 | DMZ | 192.168.30.20 | 1 GB | Servicio expuesto + Wazuh Agent |
 
 > ⚠️ RAM mínima del host: **11 GB**
 
@@ -97,10 +97,10 @@ Servidor **Wazuh** (SIEM + XDR) a la subxarxa Gestió. Agents en tots els endpoi
 
 | Sprint | Semanas | Objetivo | Log |
 |---|---|---|---|
-| **Sprint 1** | S1–S2 | Hipervisor, VMs, disseny de xarxa i diagrama de topologia | [📄 Weekly Log S1](weekly-logs/S1-weekly-log.md) |
+| **Sprint 1** | S1–S2 | Hipervisor, VMs, diseño de red y diagrama de topología | [📄 Weekly Log S1](weekly-logs/S1-weekly-log.md) |
 | **Sprint 2** | S3–S4 | Router Ubuntu, subnetting, DHCP, DNS, Suricata IDS/IPS | [📄 Weekly Log S2](weekly-logs/S2-weekly-log.md) |
 
-Gestió de tasques: **ProofHub** | Control de versions: **aquest repositori**
+Gestión de tareas: **ProofHub** | Control de versiones: **este repositorio**
 
 ---
 
@@ -110,14 +110,13 @@ Gestió de tasques: **ProofHub** | Control de versions: **aquest repositori**
 
 ```
 25-26-ASIXcBC-PF-G5/
-├── docs/ # Documentació tècnica
-├── configs/ # Configuracions exportades (sanititzades)
-├── scripts/ # Scripts de hardening i automatització
-├── tests/evidencias/ # Captures per prova (T01/ ... T26/)
-├── diagrams/ # Diagrames de topologia (draw.io + PNG)
-├── weekly-logs/ # Registre setmanal de progrés
-├── CONTRIBUTING.md # Convenció de commits i branques
-└── .gitignore # Exclusions de seguretat
+├── docs/ # Documentación técnica
+├── configs/ # Configuraciones exportadas (saneadas)
+├── scripts/ # Scripts de hardening y automatización
+├── tests/evidencias/ # Capturas por prueba (T01/ ... T26/)
+├── diagrams/ # Diagramas de topología (draw.io + PNG)
+├── weekly-logs/ # Registro semanal de progreso
+└── .gitignore # Exclusiones de seguridad
 ```
 
 
@@ -125,18 +124,18 @@ Gestió de tasques: **ProofHub** | Control de versions: **aquest repositori**
 
 ## 🔒 Módulos ASIX cubiertos
 
-- **Sistemes Operatius en Xarxa** — Instal·lació i hardening Linux
-- **Planificació i Administració de Xarxes** — Subnetting, routing, NAT, iptables
-- **Seguretat i Alta Disponibilitat** — Firewall, IDS/IPS, SOC, VPN, mínim privilegi
-- **Serveis en Xarxa** — DHCP, DNS amb DNSSEC i filtratge
-- **Gestió d'Incidents** — Detecció i resposta amb Wazuh + MITRE ATT&CK
+- **Sistemas Operativos en Red** — Instalación y hardening Linux
+- **Planificación y Administración de Redes** — Subnetting, routing, NAT, nftables
+- **Seguridad y Alta Disponibilidad** — Firewall, IDS/IPS, SOC, VPN, mínimo privilegio
+- **Servicios en Red** — DHCP, DNS con zona local y filtrado
+- **Gestión de Incidentes** — Detección y respuesta con Wazuh + MITRE ATT&CK
 
 ---
 
-## 👥 Autors — Grup 5
+## 👥 Autores — Grupo 5
 
-| Nom | GitHub |
+| Nombre | GitHub |
 |---|---|
-| kevin [itb] armada carrillo | [@KevinArmada-ITB2425](https://github.com/KevinArmada-ITB2425) |
-| jan [itb] martinez salas | [@JanMartinez-ITB2425](https://github.com/JanMartinez-ITB2425) |
-| ernesto [itb] martinez argueta | [@ErnestoMartinez-ITB2425](https://github.com/ErnestoMartinez-ITB2425) |
+| Kevin Armada Carrillo | [@KevinArmada-ITB2425](https://github.com/KevinArmada-ITB2425) |
+| Jan Martinez Salas | [@JanMartinez-ITB2425](https://github.com/JanMartinez-ITB2425) |
+| Ernesto Martinez Argueta | [@ErnestoMartinez-ITB2425](https://github.com/ErnestoMartinez-ITB2425) |
