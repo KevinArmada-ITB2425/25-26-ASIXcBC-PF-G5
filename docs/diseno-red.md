@@ -55,11 +55,11 @@
 |---|---|---|---|---|---|
 | `pfsense-fw` | FreeBSD (pfSense) | Totes | 192.168.X.1 | 1 GB | Firewall + Suricata + WireGuard |
 | `wazuh-server` | Ubuntu 22.04 LTS | vlan10 | 192.168.10.10 | **4 GB** | SOC: Wazuh Manager + Indexer + Dashboard |
-| `admin-server` | Debian 12 | vlan10 | 192.168.10.20 | 1 GB | Kea DHCP + Unbound DNS + Wazuh Agent |
-| `client-user1` | Debian 12 | vlan20 | DHCP (~.10) | 1 GB | Endpoint usuari + Wazuh Agent 1 |
-| `client-user2` | Debian 12 | vlan20 | DHCP (~.11) | 1 GB | Endpoint usuari + Wazuh Agent 2 |
-| `dmz-host1` | Debian 12 | vlan30 | 192.168.30.10 | 1 GB | Servei exposat + Wazuh Agent 3 |
-| `dmz-host2` | Debian 12 | vlan30 | 192.168.30.20 | 1 GB | Servei exposat + Wazuh Agent 4 |
+| `admin-server` | Ubuntu 22.04 LTS | vlan10 | 192.168.10.20 | 1 GB | Kea DHCP + Unbound DNS + Wazuh Agent |
+| `client-user1` | Ubuntu 22.04 LTS | vlan20 | DHCP (~.10) | 1 GB | Endpoint usuari + Wazuh Agent 1 |
+| `client-user2` | Ubuntu 22.04 LTS | vlan20 | DHCP (~.11) | 1 GB | Endpoint usuari + Wazuh Agent 2 |
+| `dmz-host1` | Ubuntu Server 22.04 LTS | vlan30 | 192.168.30.10 | 1 GB | Servei exposat + Wazuh Agent 3 |
+| `dmz-host2` | Ubuntu Server 22.04 LTS | vlan30 | 192.168.30.20 | 1 GB | Servei exposat + Wazuh Agent 4 |
 
 > RAM total mínima del host: **12 GB**
 
