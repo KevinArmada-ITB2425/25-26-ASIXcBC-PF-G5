@@ -110,13 +110,31 @@ Gestión de tareas: **ProofHub** | Control de versiones: **este repositorio**
 
 ```
 25-26-ASIXcBC-PF-G5/
-├── docs/ # Documentación técnica
-├── configs/ # Configuraciones exportadas (saneadas)
-├── scripts/ # Scripts de hardening y automatización
-├── tests/evidencias/ # Capturas por prueba (T01/ ... T26/)
-├── diagrams/ # Diagramas de topología (draw.io + PNG)
-├── weekly-logs/ # Registro semanal de progreso
-└── .gitignore # Exclusiones de seguridad
+├── configs/
+│   ├── wazuh/                        ← config.md + imágenes del dashboard
+│   ├── ubuntu-router/
+│   │   ├── backups-automatizacion/
+│   │   │   ├── configs/
+│   │   │   └── scripts/
+│   │   ├── config.md
+│   │   ├── verificacion_technitium-dns.png
+│   │   └── verificacion_ubuntu-server.webp
+│   ├── dmz/
+│   │   ├── Documentacio dmz-host1.md
+│   │   └── Documentacio dmz-host2.md
+│   └── README.md                     
+├── diagrams/
+│   └── diagrama_finalissima.webp     
+├── docs/
+│   ├── diseno-red.md
+│   ├── hardening.md
+│   ├── justificacion-tecnica.md
+│   ├── plan-proyecto.md
+│   └── pruebas.md
+├── weekly-logs/
+│   ├── S1-weekly-log.md
+│   ├── S2-weekly-log.md
+└── .gitignore
 ```
 
 
