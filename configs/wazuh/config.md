@@ -114,6 +114,149 @@ curl -k https://192.168.10.10
 
 ---
 
+## Automatizaciones
+
+Se han implementado 3 scripts de automatización ubicados en `/usr/local/bin/` y programados mediante `/etc/crontab`. Los scripts se encuentran en la carpeta `scripts/` del repositorio.
+
+### Scripts desplegados
+
+| Script | Descripción | Frecuencia | Log |
+|---|---|---|---|
+| `wazuh-healthcheck.sh` | Comprueba el estado de los 3 servicios Wazuh y los reinicia automáticamente si caen | Cada 5 min | `/var/log/wazuh-healthcheck.log` |
+| `wazuh-agents-report.sh` | Genera un reporte diario con la lista de agentes conectados y desconectados | Diario 08:00 | `/var/log/wazuh-agents-report_<DATE>.txt` |
+| `wazuh-backup.sh` | Realiza un backup completo de configuración, reglas, certificados y lista de agentes. Retención de 7 días | Diario 03:00 | `/var/log/wazuh-backup.log` |
+
+### Crontab (`/etc/crontab`)
+
+```bash
+*/5 * * * * root /usr/local/bin/wazuh-healthcheck.sh
+0 8 * * *   root /usr/local/bin/wazuh-agents-report.sh
+0 3 * * *   root /usr/local/bin/wazuh-backup.sh
+```
+
+### Instalación de los scripts
+
+```bash
+# Copiar scripts al sistema
+sudo cp scripts/wazuh-healthcheck.sh   /usr/local/bin/
+sudo cp scripts/wazuh-agents-report.sh /usr/local/bin/
+sudo cp scripts/wazuh-backup.sh        /usr/local/bin/
+
+# Dar permisos de ejecución
+sudo chmod +x /usr/local/bin/wazuh-healthcheck.sh
+sudo chmod +x /usr/local/bin/wazuh-agents-report.sh
+sudo chmod +x /usr/local/bin/wazuh-backup.sh
+```
+
+### `wazuh-healthcheck.sh`
+
+Comprueba cada 5 minutos que `wazuh-manager`, `wazuh-indexer` y `wazuh-dashboard` están activos. Si alguno está caído, lo reinicia automáticamente y lo registra en el log con timestamp.
+
+```bash
+# Ejecutar manualmente
+sudo /usr/local/bin/wazuh-healthcheck.sh
+
+# Ver el log
+sudo cat /var/log/wazuh-healthcheck.log
+```
+
+Ejemplo de salida:
+[2026-05-16_19-04] ✅ wazuh-manager activo
+[2026-05-16_19-04] ✅ wazuh-indexer activo
+[2026-05-16_19-04] ✅ wazuh-dashboard activo
+[2026-05-16_19-04] Todo OK
+### `wazuh-agents-report.sh`
+
+Genera cada mañana un fichero `.txt` con la lista completa de agentes registrados, filtra los que están desconectados y muestra el total. Útil para detectar agentes caídos antes de que generen incidencias.
+
+```bash
+# Ejecutar manualmente
+sudo /usr/local/bin/wazuh-agents-report.sh
+
+# Ver el reporte generado
+ls /var/log/wazuh-agents-report_*.txt
+sudo cat /var/log/wazuh-agents-report_<DATE>.txt
+```
+
+### `wazuh-backup.sh`
+
+Realiza un backup completo del servidor Wazuh y lo comprime en un único `.tar.gz` con timestamp. Elimina automáticamente backups de más de 7 días para gestionar el espacio en disco.
+
+**Contenido del backup:**
+
+| Fichero | Descripción |
+|---|---|
+| `ossec-conf.tar.gz` | Configuración del manager, reglas y decoders |
+| `local_rules.xml` | Reglas locales personalizadas |
+| `certs.tar.gz` | Certificados SSL del indexer y dashboard |
+| `opensearch_dashboards.yml` | Configuración del dashboard |
+| `opensearch.yml` | Configuración del indexer |
+| `agents-list.txt` | Lista de agentes registrados |
+
+```bash
+# Ejecutar manualmente
+sudo /usr/local/bin/wazuh-backup.sh
+
+# Verificar backups generados
+ls -lh /var/backups/wazuh/
+sudo cat /var/log/wazuh-backup.log
+```
+
+Ejemplo de salida del log:
+[2026-05-16_18-52] Iniciant backup...
+[2026-05-16_18-52] Backup completat: wazuh-backup_2026-05-16_18-52.tar.gz
+[2026-05-16_18-52] ─────────────────────────────────
+> ℹ️ Los mensajes `tar: Eliminando la '/' inicial de los nombres` son avisos normales de tar al comprimir rutas absolutas — no son errores.
+
+---
+
+## Active Response — Bloqueo automático con Suricata + nftables
+
+Cuando Suricata detecta un escaneo de puertos, Wazuh dispara automáticamente un script en el `ubuntu-router` (agente `007`) que bloquea la IP atacante en nftables durante 1 hora.
+### Configuración en `ossec.conf` del Manager
+
+```xml
+<!-- Comando personalizado -->
+<command>
+  <name>nftables-drop</name>
+  <executable>nftables-drop.sh</executable>
+  <expect>srcip</expect>
+  <timeout_allowed>yes</timeout_allowed>
+</command>
+
+<!-- Activar ante alertas de Suricata -->
+<active-response>
+  <disabled>no</disabled>
+  <command>nftables-drop</command>
+  <location>defined-agent</location>
+  <agent_id>007</agent_id>
+  <rules_group>suricata</rules_group>
+  <timeout>3600</timeout>
+</active-response>
+```
+
+```bash
+sudo systemctl restart wazuh-manager
+```
+
+### Script en `ubuntu-router`
+
+El script `nftables-drop.sh` se encuentra en `/var/ossec/active-response/bin/` del `ubuntu-router`. El código completo está en `scripts/nftables-drop.sh` del repositorio.
+
+**Verificar IPs bloqueadas:**
+```bash
+# En ubuntu-router
+sudo nft list set inet filter blacklist
+sudo cat /var/ossec/logs/active-response.log
+```
+
+**Probar el bloqueo desde Kali:**
+```bash
+nmap -sS -T4 192.168.30.10
+```
+
+---
+
 ## Despliegue de Agentes
 
 A continuación se detalla la configuración individual de cada agente registrado en el Wazuh Manager. El procedimiento de instalación es el mismo para todos; únicamente cambian el nombre, la IP y la red de cada VM.
