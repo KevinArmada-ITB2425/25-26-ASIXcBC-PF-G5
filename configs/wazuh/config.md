@@ -1,5 +1,29 @@
 # Configuración Wazuh Server
 
+## Índice
+
+- [Información General](#información-general)
+- [Prerequisitos](#prerequisitos)
+- [Instalación](#instalación)
+- [Resultado de la instalación](#resultado-de-la-instalación)
+- [Verificación de servicios](#verificación-de-servicios)
+- [Puertos utilizados](#puertos-utilizados)
+- [Automatizaciones](#automatizaciones)
+  - [wazuh-healthcheck.sh](#wazuh-healthchecksh)
+  - [wazuh-agents-report.sh](#wazuh-agents-reportsh)
+  - [wazuh-backup.sh](#wazuh-backupsh)
+- [Active Response — Suricata + nftables](#active-response--bloqueo-automático-con-suricata--nftables)
+- [Despliegue de Agentes](#despliegue-de-agentes)
+  - [Agentes registrados](#agentes-registrados)
+  - [Agente 002 · dmz-host1](#agente-002--dmz-host1)
+  - [Agente 003 · dmz-db-server](#agente-003--dmz-db-server)
+  - [Agente 004 · client-user2](#agente-004--client-user2)
+  - [Agente 005 · client-user1](#agente-005--client-user1)
+  - [Agente 006 · admin-server](#agente-006--admin-server)
+
+---
+
+
 ## Información General
 
 | Campo | Detalle |
