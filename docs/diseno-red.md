@@ -10,7 +10,6 @@
                     ┌────────┴────────┐
                     │ pfSense /       │
                     │ + Suricata IDS  │
-                    │ + WireGuard VPN │
                     └────────┬────────┘
            ┌─────────────────┼─────────────────┐
            │                 │                 │
@@ -24,11 +23,7 @@
     [admin-server]    [client-user1]     [dmz-host1]
                       [Wazuh Agent 2]    [Wazuh Agent 4]
                       [client-user2]     [dmz-host2]
-           │
-    ┌──────┴──────┐
-    │ WireGuard   │
-    │ 10.0.0.0/24 │
-    └─────────────┘
+
 ```
 
 ## Pla d'Adreçament IP
@@ -38,14 +33,13 @@
 | Gestió | vlan10 | 192.168.10.0/24 | 192.168.10.1 | .10–.50 |
 | Usuaris | vlan20 | 192.168.20.0/24 | 192.168.20.1 | .10–.100 |
 | DMZ/IoT | vlan30 | 192.168.30.0/24 | 192.168.30.1 | .10–.50 |
-| WireGuard | — | 10.0.0.0/24 | 10.0.0.1 | Estàtic |
 
 **IPs fixes:**
-- `192.168.10.1` → `pfsense-fw` (gateway vlan10)
+- `192.168.10.1` → `ubuntu router` (gateway vlan10)
 - `192.168.10.10` → `wazuh-server`
 - `192.168.10.20` → `admin-server`
-- `192.168.20.1` → `pfsense-fw` (gateway vlan20)
-- `192.168.30.1` → `pfsense-fw` (gateway vlan30)
+- `192.168.20.1` → `ubuntu router` (gateway vlan20)
+- `192.168.30.1` → `ubuntu router` (gateway vlan30)
 - `192.168.30.10` → `dmz-host1`
 - `192.168.30.20` → `dmz-host2`
 
@@ -53,7 +47,7 @@
 
 | VM | SO | Xarxa interna | IP | RAM | Rol |
 |---|---|---|---|---|---|
-| `pfsense-fw` | FreeBSD (pfSense) | Totes | 192.168.X.1 | 1 GB | Firewall + Suricata + WireGuard |
+| `ubuntu router` | Ubuntu Server 22.04 LTS | Totes | 192.168.X.1 | 1 GB | Firewall + Suricata + nftables |
 | `wazuh-server` | Ubuntu 22.04 LTS | vlan10 | 192.168.10.10 | **4 GB** | SOC: Wazuh Manager + Indexer + Dashboard |
 | `admin-server` | Ubuntu 22.04 LTS | vlan10 | 192.168.10.20 | 1 GB | Kea DHCP + Unbound DNS + Wazuh Agent |
 | `client-user1` | Ubuntu 22.04 LTS | vlan20 | DHCP (~.10) | 1 GB | Endpoint usuari + Wazuh Agent 1 |
@@ -70,6 +64,4 @@
 | **VLAN10 Gestió** | ✅ Lliure | ✅ Controlat | ✅ Controlat | ✅ Permès | ✅ Permès |
 | **VLAN20 Usuaris** | ❌ DENY | ✅ Lliure | ❌ DENY | ✅ HTTP/HTTPS | ❌ DENY |
 | **VLAN30 DMZ/IoT** | ❌ DENY | ❌ DENY | ✅ Lliure | ⚠️ Limitat | ❌ DENY |
-| **VPN WireGuard** | ✅ Permès | ⚠️ Sota demanda | ❌ DENY | ✅ Split tunnel | — |
 
-> Política base: **deny-all**. Només es permet tràfic amb regla explícita documentada.
