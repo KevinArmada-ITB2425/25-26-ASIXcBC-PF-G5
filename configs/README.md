@@ -15,7 +15,7 @@ configs/
 │ └── scripts/
 ├── dmz/ # Documentación de los hosts en la DMZ
 │ ├── Documentacio dmz-host1.md
-└── Documentacio dmz-host2.md
+│ ├── Documentacio dmz-host2.md
 ```
 
 ---
