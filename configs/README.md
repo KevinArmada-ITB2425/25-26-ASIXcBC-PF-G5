@@ -1,12 +1,17 @@
-# Configs
+# ⚙️ Configs
 
-Arxius de configuració exportats i **sanitats** (sense credencials ni claus privades).
+Archivos de configuración exportados y **saneados** (sin credenciales ni claves privadas)
 
-> ⚠️ Abans de fer commit, elimina o reemplaça: contrasenyes, hashes bcrypt, claus privades WireGuard i certificats TLS.
 
-## Estructura
+---
 
-- `pfsense/` — config.xml sanititzat
-- `wireguard/` — arxius .conf sense PrivateKey
-- `vlans/` — configuració d'interfícies
-- `wazuh/` — ossec.conf i regles personalitzades
+## 📁 Estructura
+configs/
+├── wazuh/ # Wazuh Manager — ossec.conf, reglas personalizadas e imágenes
+├── ubuntu-router/ # Router/Firewall Ubuntu — nftables, Suricata, DHCP, DNS
+│ └── backups-automatizacion/ # Scripts y configs de backup automático del router
+│ ├── configs/
+│ └── scripts/
+├── dmz/ # Documentación de los hosts en la DMZ
+│ ├── Documentacio dmz-host1.md
+└── Documentacio dmz-host2.md
