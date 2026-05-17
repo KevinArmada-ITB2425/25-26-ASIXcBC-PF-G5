@@ -6,7 +6,7 @@ Archivos de configuración exportados y **saneados** (sin credenciales ni claves
 ---
 
 ## 📁 Estructura
-``
+```
 configs/
 ├── wazuh/ # Wazuh Manager — ossec.conf, reglas personalizadas e imágenes
 ├── ubuntu-router/ # Router/Firewall Ubuntu — nftables, Suricata, DHCP, DNS
@@ -16,7 +16,7 @@ configs/
 ├── dmz/ # Documentación de los hosts en la DMZ
 │ ├── Documentacio dmz-host1.md
 └── Documentacio dmz-host2.md
-``
+```
 
 ---
 
